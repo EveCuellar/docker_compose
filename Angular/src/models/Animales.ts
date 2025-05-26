@@ -1,13 +1,15 @@
 export class Animales {
    
-    nombre: string
-    edad: Number
-    esDomestico: boolean
+    titulo: string;
+    autor: string;
+    paginas : number;
+    id : number;
 
-    constructor(nombre: string, edad: Number, esDomestico: boolean) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.esDomestico = esDomestico;
+    constructor(id : number, paginas: number, titulo : string, autor:string) {
+        this.autor = autor;
+        this.titulo = titulo;
+        this.paginas = paginas
+        this.id = id
     }
 
 }

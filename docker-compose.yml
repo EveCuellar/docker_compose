@@ -17,12 +17,14 @@ services:
     networks:
       - app-network
     environment:
-      - MONGO_URL=mongodb://mongo:27017/mydb
+      - MONGO_URI=mongodb://mongo:27017/animales
     depends_on:
       - mongo
 
   mongo:
     image: mongo:6
+    ports:
+      - "27018:27017"
     networks:
       - app-network
     volumes:
