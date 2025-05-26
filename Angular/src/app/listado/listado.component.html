@@ -1,0 +1,58 @@
+<div class="Animal-list">
+    <button onclick="location.reload()">Recargar</button>
+  
+    <button onclick="location.href='login'">Iniciar Sesión</button>
+    <button onclick="location.href='register'">Registrarse</button>
+
+  
+    <h1>Listado de Animales</h1>
+  
+    <div *ngFor="let Animal of animales">
+      <h2>
+        {{ Animal.especie }} {{ Animal.edad }} <strong>esDomestico:</strong> ${{ Animal.esDomestico }}
+        <button (click)="eliminarAnimal(Animal._id)">Eliminar</button>
+        <button (click)="iniciarModificacion(Animal)">Modificar</button>
+      </h2>
+   
+   
+      <div *ngIf="idEditando === Animal._id">
+        <form (ngSubmit)="modAnimalfunc(Animal._id)">
+          <div>
+            <label for="especie">Especie:</label>
+            <input type="text" [(ngModel)]="modAnimal.especie" name="especie-{{Animal._id}}" required />
+          </div>
+          <div>
+            <label for="edad">Edad:</label>
+            <input type="number" [(ngModel)]="modAnimal.edad" name="edad-{{Animal._id}}" required />
+          </div>
+          <div>
+            <label for="esDomestico">Es Domestico:</label>
+            <input type="checkbox" [(ngModel)]="modAnimal.esDomestico" name="esDomestico{{Animal._id}}" required />
+          </div>
+          <button type="submit">Guardar Cambios</button>
+          <button type="button" (click)="idEditando = null">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <button (click)="mostrarFormulario = true">Agregar Animal</button>
+  
+    <div *ngIf="mostrarFormulario">
+      <h2>Agregar Nuevo Animal</h2>
+      <form (ngSubmit)="agregarAnimal()">
+        <div>
+          <label for="especie">Especie:</label>
+          <input type="text" [(ngModel)]="nuevoAnimal.especie" name="especie" required />
+        </div>
+        <div>
+          <label for="edad">Edad:</label>
+          <input type="number" [(ngModel)]="nuevoAnimal.edad" name="edad" required />
+        </div>
+        <div>
+          <label for="esDomestico">EsDomestico:</label>
+          <input type="checkbox" [(ngModel)]="nuevoAnimal.esDomestico" name="esDomestico" />
+        </div>
+        <button type="submit">Agregar</button>
+        <button type="button" (click)="mostrarFormulario = false">Cancelar</button>
+      </form>
+    </div>
+  </div>
