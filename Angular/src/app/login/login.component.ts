@@ -1,22 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { UsuarioService } from '../services/user.service';
   
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
+  nombre: string = '';
   password: string = '';
 
-  onLogin() {
-    if (this.username === 'admin' && this.password === '1234') {
-      alert('Inicio de sesión exitoso');
-    } else {
-      alert('Usuario o contraseña incorrectos');
+  constructor(private usuarioService: UsuarioService) {}
+
+  async ingresar() {
+    try {
+      const respuesta = await this.usuarioService.comprobar(this.nombre, this.password);
+      alert('Iniciando Sesión');
+      if (respuesta.token) {
+        localStorage.setItem('token', respuesta.token);
+      }
+    } catch (error: any) {
+      alert(error.response?.data?.mensaje || 'Error al ingresar usuario');
     }
   }
 }
