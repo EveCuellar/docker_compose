@@ -5,18 +5,18 @@ const clave = 'fjw43fslkH5h78skjH!@5ksld&k!@76hks';
 
 export const verificarToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-
-    if (!authHeader || !authHeader.startsWith('Bearer')) {
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) {
         res.status(400).json({ error: 'No hay Token' });
-    }else{
-        const token = authHeader.split(' ')[1];
+        return;
+    }
 
-        try {
-            const decoded = jwt.verify(token, clave);
-            req.user = decoded;
-            next(); 
-        } catch (error) {
-            res.status(400).json({ error: 'Token no valido' });
+    jwt.verify(token, clave, (err, user) => {
+        if (err) {
+          res.status(403).json({ message: 'Token inválido o expirado' });
+          return;
         }
-    } 
+        (req as any).user = user;
+        next();
+    });
 };

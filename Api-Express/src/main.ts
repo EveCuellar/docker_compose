@@ -9,9 +9,16 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(cors());
-app.use("/animales", verificarToken, AnimalesRouter);
-app.use("/auth", AuthRouter)
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+}));
+app.use("/animales", AnimalesRouter);
+app.use("/auth", verificarToken, AuthRouter)
+
+/*app.get("/auth", verificarToken, (req, res) => {
+    res.json({ message: "Bienvenido al perfil", user: (req as any).user });
+});*/
 
 conectar();
 
