@@ -7,7 +7,7 @@ import axios from 'axios';
 @Component({
   selector: 'app-root',
   standalone: true, 
-  imports: [RouterOutlet, CommonModule, FormsModule], 
+  imports: [CommonModule, FormsModule], 
   templateUrl: './listado.component.html',
   styleUrls: ['./listado.component.css']
 })

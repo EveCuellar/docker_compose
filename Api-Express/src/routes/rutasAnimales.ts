@@ -31,6 +31,7 @@ AnimalesRouter.post('/', async (req: Request, res: Response) => {
   try {
     const { especie, edad, esDomestico } = req.body;
     const nuevoAnimal = await ControllerAnimal.agregar(especie, edad, esDomestico);
+    
     res.status(201).json(nuevoAnimal);
   } catch (error) {
     res.status(500).send('Error al agregar el animal');

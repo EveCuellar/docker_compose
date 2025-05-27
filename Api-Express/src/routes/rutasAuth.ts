@@ -1,4 +1,4 @@
-/*import express, { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { ControllerAuth } from '../controllers/controllerAuth.js';
 
 
@@ -23,4 +23,3 @@ AuthRouter.post('/register', async (req: Request, res: Response) => {
         res.status(400).json({ error: 'ERROR' });
     }
 });
-*/

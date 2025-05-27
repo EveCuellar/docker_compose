@@ -1,45 +1,28 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormsModule} from '@angular/forms';
+import { UsuarioService } from '../services/user.service';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
+
 export class RegisterComponent {
-  registerForm: FormGroup;
-  submitted = false;
+  nombre = '';
+  password = '';
 
-  constructor(private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
-  }
+  constructor(private usuarioService: UsuarioService) {}
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
-  }
-
-  get f() {
-    return this.registerForm.controls;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    if (this.registerForm.invalid) {
-      return;
+  async registrar() {
+    try {
+      const respuesta = await this.usuarioService.registrar(this.nombre, this.password);
+      alert(respuesta.mensaje);
+    } catch (error: any) {
+      alert(error.response?.data?.mensaje || 'Error al registrar usuario');
     }
-
-    console.log('Form Submitted', this.registerForm.value);
   }
 }
-
